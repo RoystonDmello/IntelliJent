@@ -1,1 +1,9 @@
-config.py
+.idea/
+backend/__init__.pyc
+backend/commands.pyc
+backend/config.pyc
+backend/migrations/env.pyc
+backend/migrations/versions/7b75da94a31b_.pyc
+backend/models.pyc
+backend/views.pyc
+backend/config.py
