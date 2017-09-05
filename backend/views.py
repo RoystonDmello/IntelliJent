@@ -7,3 +7,11 @@ def song_meta():
     # data = request.form.to_dict()
     song = request.json
 
+    spot_id = sp.get_song(song)
+
+    features = sp.get_features(spot_id)
+
+    return jsonify(features)
+
+    
+
