@@ -8,3 +8,6 @@ backend/models.pyc
 backend/views.pyc
 backend/config.py
 backend/.cache-dmelloroyston42
+backend/spotipy_helper.pyc
+backend/token.pkl
+backend/__init__.py
