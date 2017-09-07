@@ -9,6 +9,8 @@ import click
 from backend import app, db
 from backend.models import Song
 
+import model_helper as mdh
+
 @app.cli.command()
 def load_songs():
     """
@@ -35,22 +37,7 @@ def load_songs():
 
                         spot_ids.add(song.get('id'))
 
-                        s = Song(
-                            spot_id=song.get('id'),
-                            dance=song.get('danceability', 0) or 0,
-                            energy=song.get('energy', 0) or 0,
-                            key=song.get('key', 0) or 0,
-                            loud=song.get('loudness', 0) or 0,
-                            mode=song.get('mode', 0) or 0,
-                            speech=song.get('speechiness', 0) or 0,
-                            acoustic=song.get('acousticness', 0) or 0,
-                            instrument=song.get('instrumentalness', 0) or 0,
-                            live=song.get('liveness', 0) or 0,
-                            valence=song.get('valence', 0) or 0,
-                            tempo=song.get('tempo', 0) or 0,
-                            duration=song.get('duration_ms', 0) or 0,
-                            time=song.get('time_signature', 0) or 0
-                        )
+                        s = mdh.set_features(song)
 
                         db.session.add(s)
             db.session.commit()
