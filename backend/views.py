@@ -1,21 +1,38 @@
 import datetime
 
-from backend import app
-from flask import Flask, render_template, request, jsonify
-
+from backend import app, db
+from models import User, Song, UserSong
+from flask import request, jsonify
+from datetime import datetime as dt
 import spotipy_helper as sph
+import model_helper as mdh
 
 
 @app.route('/v1.0/song', methods=['POST'])
 def song_meta():
-    # data = request.form.to_dict()
-    song = request.json
 
+    song = request.json
     spot_id = sph.get_song(song)
 
-    features = sph.get_features(spot_id)
+    user = User.query.get(1)
 
-    return jsonify(features)
+    song_db = Song.query.filter_by(spot_id=spot_id).first()
+    if not song_db:
+        song_features = sph.get_features(spot_id)
+
+        print song_features
+
+        song_db = mdh.set_features(song_features)
+
+        db.session.add(song_db)
+        db.session.commit()
+
+    UserSong(user, song_db, dt.now())
+    db.session.commit()
+
+    response = {"success": True}
+
+    return jsonify(response)
 
     
 

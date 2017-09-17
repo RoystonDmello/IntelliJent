@@ -16,9 +16,8 @@ def get_song(meta_dict):
 
     return results['tracks']['items'][0]['id']
 
-
 def get_features(spot_id):
 
     results = spotify.audio_features([spot_id])
 
-    return results
+    return results[0]
