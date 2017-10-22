@@ -3,7 +3,7 @@ backend/__init__.pyc
 backend/commands.pyc
 backend/config.pyc
 backend/migrations/env.pyc
-backend/migrations/versions/7b75da94a31b_.pyc
+backend/migrations/versions/025ffa81b1bb_.pyc
 backend/models.pyc
 backend/views.pyc
 backend/config.py
@@ -11,3 +11,4 @@ backend/.cache-dmelloroyston42
 backend/spotipy_helper.pyc
 backend/token.pkl
 backend/__init__.py
+backend/test.py

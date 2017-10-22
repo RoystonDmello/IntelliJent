@@ -21,3 +21,9 @@ def get_features(spot_id):
     results = spotify.audio_features([spot_id])
 
     return results[0]
+
+def get_songs(spot_ids):
+
+    songs = spotify.tracks(spot_ids)
+
+    

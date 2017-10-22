@@ -3,12 +3,6 @@ from sqlalchemy.ext.associationproxy import association_proxy
 from backend import db
 
 
-# plays = db.Table('plays',
-#             db.Column('user_id', db.Integer(), db.ForeignKey('user.id', ondelete='CASCADE'), primary_key=True),
-#             db.Column('song_id', db.Integer(), db.ForeignKey('song.id', ondelete='RESTRICT'), primary_key=True),
-#             db.Column('time_played', db.DateTime(), primary_key=True)
-#         )
-
 class UserSong(db.Model):
     __tablename__ = 'user_song'
     user_id = db.Column('user_id', db.Integer(), db.ForeignKey('user.id', ondelete='CASCADE'), primary_key=True)
@@ -16,7 +10,7 @@ class UserSong(db.Model):
 
     time_played = db.Column('time_played', db.DateTime(), primary_key=True)
 
-    user = db.relationship("User", backref=db.backref('user_song'))
+    user = db.relationship("User", backref=db.backref('user_song', lazy='dynamic'))
 
     song = db.relationship("Song")
 

@@ -2,6 +2,8 @@
 Helpers for inserting data in the database, especially with songs.
 """
 
+import numpy as np
+
 from models import Song
 
 
@@ -28,3 +30,26 @@ def set_features(song_features):
     )
 
     return song
+
+def get_features(songs):
+
+    array_shape = (len(songs), 13)
+
+    song_features = np.zeros(array_shape)
+
+    for i,song in enumerate(songs):
+        song_features[i, 0] = song.dance
+        song_features[i, 1] = song.energy
+        song_features[i, 2] = song.key
+        song_features[i, 3] = song.loud
+        song_features[i, 4] = song.mode
+        song_features[i, 5] = song.speech
+        song_features[i, 6] = song.acoustic
+        song_features[i, 7] = song.instrument
+        song_features[i, 8] = song.live
+        song_features[i, 9] = song.valence
+        song_features[i, 10] = song.tempo
+        song_features[i, 11] = song.duration
+        song_features[i, 12] = song.time
+
+    return song_features
