@@ -17,7 +17,13 @@ def song_meta():
     song = request.json
     spot_id = sph.get_song(song)
 
-    user = User.query.get(1)
+    user = User.query.filter_by(email=song['Sender']).first()
+    if not user:
+        user = User(email=song['Sender'], username='default', pswd_hash='kwjebwuieh238102ch8')
+
+        db.session.add(user)
+        db.session.commit()
+    # user = User.query.get(1)
 
     song_db = Song.query.filter_by(spot_id=spot_id).first()
     if not song_db:
@@ -30,7 +36,7 @@ def song_meta():
         db.session.add(song_db)
         db.session.commit()
 
-    UserSong(user, song_db, dt.now())
+    UserSong(user, song_db, dt.datetime.now())
     db.session.commit()
 
     response = {"success": True}
@@ -41,7 +47,7 @@ def song_meta():
 def recommend():
 
     start = time.time()
-    user = User.query.get(1)
+    user = User.query.filter_by(email='adity.bhave41@yahoo.com').first()
 
     time7 = dt.datetime.now() - dt.timedelta(days=7)
     timen = dt.datetime.now()
@@ -76,11 +82,11 @@ def recommend():
 
         sendable_ids = preds_all[sendind, 0].tolist()
 
-        spot_ids = [Song.query.with_entities(Song.spot_id).filter_by(id=id).first() for id in sendable_ids]
+        spot_ids = [Song.query.with_entities(Song.spot_id).filter_by(id=id).first()[0] for id in sendable_ids]
 
         tracks = sph.get_songs(spot_ids)
 
-    return
+    return jsonify(tracks)
 
 
 

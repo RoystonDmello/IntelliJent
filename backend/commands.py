@@ -22,7 +22,7 @@ def load_songs():
 
     data_dir = '/home/royston/IntelliJent/results'
 
-    for filename in sorted(os.listdir(data_dir)):
+    for filename in sorted(os.listdir(data_dir))[-1]:
         filepath = os.path.join(data_dir, filename)
 
         with open(filepath) as fp:

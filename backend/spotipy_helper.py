@@ -6,11 +6,17 @@ from backend import spotify
 
 def get_song(meta_dict):
 
-    song = meta_dict['song']
-    artist = meta_dict['artist']
-    album = meta_dict['album']
+    song = meta_dict['Title']
+    artist = meta_dict['Artist']
+    album = meta_dict['Album']
 
-    query = "track:" + song + " artist:" + artist + " album:" + album
+    query = "track:" + song 
+
+    if artist:
+    	query = query + " artist:" + artist
+
+    if album:
+    	query = query + " album:" + album
 
     results = spotify.search(q=query, type="track", limit=1)
 
@@ -25,5 +31,22 @@ def get_features(spot_id):
 def get_songs(spot_ids):
 
     songs = spotify.tracks(spot_ids)
+
+    sendable_songs = []
+    # print songs
+    for song in songs['tracks']:
+    	# print song
+    	sendable_song = {
+    		"Artist": song['artists'][0]['name'],
+    		"Album": song['album']['name'],
+    		"Title": song['name']
+    	}
+
+    	sendable_songs.append(sendable_song)
+
+    return {
+    	"Songs": sendable_songs
+    }	
+
 
     
